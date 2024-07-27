@@ -1,5 +1,5 @@
 # cs2-custom-weapons
-**a plugin that changes the weapons to custom models**
+**a plugin that changes the models on weapons to custom ones**
 
 <br>
 
