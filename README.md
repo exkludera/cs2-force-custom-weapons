@@ -5,7 +5,7 @@
 
 ## information
 
-> [!!CAUTION]
+> [!CAUTION]
 > sends a error message sometimes but just ignore it 😂
 
 > [!NOTE]
