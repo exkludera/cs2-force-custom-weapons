@@ -1,11 +1,17 @@
 # cs2-custom-weapons
-**a plugin that changes the models on weapons to custom ones**
+**this plugin changes the models on weapons to custom ones**
 
 <br>
 
 ## information
 
-> [!CAUTION]
+### requirements
+- [MetaMod](https://cs2.poggu.me/metamod/installation)
+- [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp)
+
+<br>
+
+> [!WARNING]
 > sends a error message sometimes but just ignore it 😂
 
 > [!NOTE]
@@ -13,7 +19,7 @@
 
 <img src="https://media.discordapp.net/attachments/1051988905320255509/1146537451750432778/ezgif.com-video-to-gif_2.gif?ex=66a359f6&is=66a20876&hm=768e346857f44792cf5b2917fe55b525522029ecccac95bb765b881baa6660d7&" width="250">>
 
-## config
+## example config
 ```json
 {
   "Weapons": {
