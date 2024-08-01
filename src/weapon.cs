@@ -11,7 +11,7 @@ public partial class Plugin : BasePlugin, IPluginConfig<Config>
 {
     public void OnEntityCreated(CEntityInstance entity)
     {
-        if (entity == null)
+        if (!entity.IsValid)
             return;
 
         if (!entity.DesignerName.StartsWith("weapon_"))
