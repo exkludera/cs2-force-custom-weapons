@@ -27,13 +27,13 @@
 {
   "Weapons": {
     "weapon_knife": {
-      "Model": "models/example/file.vmdl",
-      "Team": "T"
+      "Model": "models/example/file.vmdl"
     },
     "weapon_awp": {
-      "Model": "models/example/file.vmdl"
+      "Model": "models/example/file.vmdl",
+      "Permission": "@css/reservation",
+      "Team": "T"
     }
-  },
-  "ConfigVersion": 1
+  }
 }
 ```

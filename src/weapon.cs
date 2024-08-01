@@ -1,5 +1,6 @@
 ﻿using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Admin;
 using CounterStrikeSharp.API.Modules.Entities;
 using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Utils;
@@ -54,12 +55,15 @@ public partial class Plugin : BasePlugin, IPluginConfig<Config>
             {
                 if (entity.DesignerName.Contains(weaponKey))
                 {
+                    string permission = Config.Weapons[weaponKey].Team.ToLower();
+                    bool hasPermission = !string.IsNullOrEmpty(permission) && AdminManager.PlayerHasPermissions(player, permission);
+
                     string team = Config.Weapons[weaponKey].Team.ToLower();
                     bool isTeamValid = (team == "t" || team == "terrorist") && player.Team == CsTeam.Terrorist ||
                                        (team == "ct" || team == "counterterrorist") && player.Team == CsTeam.CounterTerrorist ||
                                        (team == "" || team == "both") && (player.Team == CsTeam.Terrorist || player.Team == CsTeam.CounterTerrorist);
 
-                    if (!isTeamValid)
+                    if (!hasPermission || !isTeamValid)
                         continue;
 
                     var activeweapon = player.PlayerPawn.Value?.WeaponServices?.ActiveWeapon.Value;
