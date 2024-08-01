@@ -1,9 +1,9 @@
 ﻿using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 
-namespace CustomWeapons;
+namespace ForceCustomWeapons;
 
-public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
+public partial class Plugin : BasePlugin, IPluginConfig<Config>
 {
     public Config Config { get; set; } = new Config();
     public void OnConfigParsed(Config config) { Config = config; }

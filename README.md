@@ -1,4 +1,4 @@
-# cs2-custom-weapons
+# cs2-force-custom-weapons
 **this plugin changes the models on weapons to custom ones**
 
 <br>
@@ -10,9 +10,6 @@
 - [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp)
 
 <br>
-
-> [!WARNING]
-> sends a error message sometimes but just ignore it 😂
 
 > [!NOTE]
 > a lot of code from [schwarper/cs2-store](https://github.com/schwarper/cs2-store)

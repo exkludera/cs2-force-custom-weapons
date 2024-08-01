@@ -1,12 +1,13 @@
 ﻿using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Entities;
 using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Utils;
 using System.Runtime.InteropServices;
 
-namespace CustomWeapons;
+namespace ForceCustomWeapons;
 
-public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
+public partial class Plugin : BasePlugin, IPluginConfig<Config>
 {
     public void OnEntityCreated(CEntityInstance entity)
     {
@@ -16,21 +17,38 @@ public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
         if (!entity.DesignerName.StartsWith("weapon_"))
             return;
 
-        var weapon = entity.As<CBasePlayerWeapon>();
-
-        if (weapon == null)
-            return;
         Server.NextWorldUpdate(() =>
         {
-            if (weapon.OriginalOwnerXuidLow == 0)
+            var weapon = new CBasePlayerWeapon(entity.Handle);
+
+            if (!weapon.IsValid)
                 return;
 
-            var player = Utilities.GetPlayerFromSteamId(weapon.OriginalOwnerXuidLow);
-
-            if (player == null)
+            if (weapon.OriginalOwnerXuidLow <= 0)
                 return;
 
-            var activeweapon = player.PlayerPawn.Value?.WeaponServices?.ActiveWeapon.Value;
+            SteamID? _steamid = null;
+
+            if (weapon.OriginalOwnerXuidLow > 0)
+                _steamid = new(weapon.OriginalOwnerXuidLow);
+
+            CCSPlayerController? player = null;
+
+
+            if (_steamid != null && _steamid.IsValid())
+            {
+                player = Utilities.GetPlayers().FirstOrDefault(p => p.IsValid && p.SteamID == _steamid.SteamId64);
+
+                if (player == null)
+                    player = Utilities.GetPlayerFromSteamId(weapon.OriginalOwnerXuidLow);
+            }
+            else
+            {
+                CCSWeaponBaseGun gun = weapon.As<CCSWeaponBaseGun>();
+                player = Utilities.GetPlayerFromIndex((int)weapon.OwnerEntity.Index) ?? Utilities.GetPlayerFromIndex((int)gun.OwnerEntity.Value!.Index);
+            }
+
+            if (string.IsNullOrEmpty(player?.PlayerName)) return;
 
             foreach (var weaponKey in Config.Weapons.Keys)
             {
@@ -44,10 +62,12 @@ public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
                     if (!isTeamValid)
                         continue;
 
+                    var activeweapon = player.PlayerPawn.Value?.WeaponServices?.ActiveWeapon.Value;
+
                     if (activeweapon != null && weapon == activeweapon)
                         Weapon.UpdateModel(player, activeweapon, Config.Weapons[weaponKey].Model, true);
-                    else
-                        Weapon.UpdateModel(player, weapon, Config.Weapons[weaponKey].Model, false);
+
+                    else Weapon.UpdateModel(player, weapon, Config.Weapons[weaponKey].Model, false);
 
                     break;
                 }

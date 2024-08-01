@@ -1,12 +1,12 @@
 using CounterStrikeSharp.API.Core;
 using static CounterStrikeSharp.API.Core.Listeners;
 
-namespace CustomWeapons;
+namespace ForceCustomWeapons;
 
-public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
+public partial class Plugin : BasePlugin, IPluginConfig<Config>
 {
-    public override string ModuleName => "Custom Weapons";
-    public override string ModuleVersion => "1.0.0";
+    public override string ModuleName => "Force Custom Weapons";
+    public override string ModuleVersion => "1.0.1";
     public override string ModuleAuthor => "exkludera";
 
     public override void Load(bool hotReload)
@@ -24,5 +24,7 @@ public partial class CustomWeapons : BasePlugin, IPluginConfig<Config>
     {
         RemoveListener<OnServerPrecacheResources>(OnServerPrecacheResources);
         RemoveListener<OnEntityCreated>(OnEntityCreated);
+
+        DeregisterEventHandler<EventItemEquip>(OnItemEquip);
     }
 }
